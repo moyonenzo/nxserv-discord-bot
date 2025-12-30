@@ -21,7 +21,7 @@ class Client(discord.Client):
 
         self.update_status.start()
 
-    @tasks.loop(seconds=10)
+    @tasks.loop(seconds=30)
     async def update_status(self):
         infos = self.gameserver.get_infos()
         activity = discord.Game(f"🔵 {infos.player_count}/{infos.max_players} joueurs")

@@ -13,14 +13,3 @@ class Server:
     def get_players(self):
         self.players = a2s.players(self.server_address)
         return self.players
-
-def format_duration(seconds: float) -> str:
-    seconds = int(seconds)
-    hours, remainder = divmod(seconds, 3600)
-    minutes, secs = divmod(remainder, 60)
-    return f"{hours}h {minutes}m {secs}s"
-
-server = Server("51.195.79.106", 27015)
-
-player = server.get_players()[0]
-print(f"{format_duration(player.duration)} → {player.name}")
