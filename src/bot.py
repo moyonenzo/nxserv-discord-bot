@@ -13,7 +13,7 @@ def format_duration(seconds: float) -> str:
 class Client(discord.Client):
     async def on_ready(self):
         self.gameserver = Server("51.195.79.106", 27015)
-        self.channel = self.get_channel(1455655977792573512)
+        self.channel = self.get_channel(1455681895588302868)
         self.embed_message = None
 
         self.update_status.start()
