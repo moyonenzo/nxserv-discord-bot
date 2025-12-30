@@ -1,7 +1,11 @@
 import os
 import discord
 
-from src.bot import Client
+try:
+    from src.bot import Client
+except ModuleNotFoundError:
+    from bot import Client
+
 from dotenv import load_dotenv
 
 load_dotenv()

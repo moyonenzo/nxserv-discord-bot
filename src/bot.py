@@ -2,7 +2,10 @@ import datetime
 import discord
 from discord.ext import tasks
 
-from src.server import Server
+try:
+    from src.server import Server
+except ModuleNotFoundError:
+    from server import Server
 
 def format_duration(seconds: float) -> str:
     seconds = int(seconds)
