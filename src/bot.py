@@ -8,7 +8,7 @@ def format_duration(seconds: float) -> str:
     seconds = int(seconds)
     hours, remainder = divmod(seconds, 3600)
     minutes, secs = divmod(remainder, 60)
-    return f"{hours}h" if hours > 0 else f"{minutes}m"
+    return f"{hours}h {minutes}m {secs}s"
 
 class Client(discord.Client):
     async def on_ready(self):
@@ -18,7 +18,7 @@ class Client(discord.Client):
 
         self.update_status.start()
 
-    @tasks.loop(minutes=1)
+    @tasks.loop(seconds=10)
     async def update_status(self):
         infos = self.gameserver.get_infos()
         activity = discord.Game(f"🔵 {infos.player_count}/{infos.max_players} joueurs")
@@ -32,7 +32,7 @@ class Client(discord.Client):
 
         players_text = ""
         for player in self.gameserver.get_players():
-            players_text += f"→ {player.name}\n"
+            players_text += f"`{format_duration(player.duration)}` → {player.name if player.name != '' else '*connexion en cours*'}\n"
 
         embed = discord.Embed(color=discord.Color.blue() if infos.player_count > 0 else discord.Color.red())
         embed.set_author(icon_url="https://cdn.discordapp.com/attachments/1037817329611980844/1455670837729562755/images.png?ex=6955929c&is=6954411c&hm=e7570ed6fa8b781102120e7e0361cdd82fc0b46f4e829a576a39963dcf6618db&", name=f"Joueurs en ligne : {infos.player_count}/{infos.max_players}")
